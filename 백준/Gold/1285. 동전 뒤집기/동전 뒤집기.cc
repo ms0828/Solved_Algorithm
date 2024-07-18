@@ -48,12 +48,12 @@ int main() {
     {
         string s;
         cin >> s;
-        int value = 1;
+        int value = (1 << s.size() - 1);
         for (int j = 0; j < n; j++)
         {
             if (s[j] == 'T')
                 a[i] |= value;
-            value *= 2;
+            value /= 2;
         }
     }
     go(1);
