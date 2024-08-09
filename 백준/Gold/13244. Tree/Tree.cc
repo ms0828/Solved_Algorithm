@@ -14,27 +14,19 @@
 #include<cmath>
 #pragma warning(disable:4996)
 using namespace std;
-int t, n, m;
-int adj[1001][1001];
+int t, n, m, cnt;
+vector<int> adj[1001];
 int visited[1001];
-bool isGraph = false;
 
-void dfs(int s, int prev)
+void dfs(int here)
 {
-    visited[s] = 1;
-
-    for (int e = 1; e <= n; e++)
+    visited[here] = 1;
+    for (int there : adj[here])
     {
-        if (adj[s][e] && e != prev)
-        {
-            if (visited[e])
-            {
-                isGraph = true;
-                return;
-            }
-            dfs(e, s);
-        }
+        if (visited[there] == 0)
+            dfs(there);
     }
+    return;
 }
 
 int main() {
@@ -45,35 +37,32 @@ int main() {
     cin >> t;
     for (int i = 0; i < t; i++)
     {
-        fill(&adj[0][0], &adj[1000][1001], 0);
+        for (int i = 1; i <= 1000; i++)
+            adj[i].clear();
         fill(&visited[0], &visited[1001], 0);
+        cnt = 0;
         cin >> n;
         cin >> m;
-        isGraph = false;
-        
+
         for (int j = 1; j <= m; j++)
         {
             int a, b;
             cin >> a >> b;
-            if (adj[a][b] == 1 || adj[b][a] == 1)
-                isGraph = true;
-            adj[a][b] = 1;
-            adj[b][a] = 1;
+            adj[a].push_back(b);
+            adj[b].push_back(a);
         }
-        dfs(1, 0);
-
         for (int k = 1; k <= n; k++)
         {
-            if(visited[k] == 0)
+            if (visited[k] == 0)
             {
-                isGraph = true;
-                break;
+                dfs(k);
+                cnt++;
             }
         }
-        if (isGraph)
-            cout << "graph\n";
-        else
+        if (m == n - 1 && cnt == 1)
             cout << "tree\n";
+        else
+            cout << "graph\n";
     }
     return 0;
 }
