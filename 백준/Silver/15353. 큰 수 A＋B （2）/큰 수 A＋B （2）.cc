@@ -17,59 +17,29 @@ using namespace std;
 
 string a, b;
 string ret;
-void go(string a, string b)
+string add(string a, string b)
 {
-    int ai = a.size() - 1;
-    int bi = b.size() - 1;
-    bool flag = false;
-    while (ai >= 0 && bi >= 0)
+    int sum = 0;
+    string ret;
+    
+    while (a.size() || b.size() || sum)
     {
-        char temp = a[ai] + b[bi] - '0';
-        if (flag)
-            temp += 1;
-        if (temp > '9')
+        if (a.size())
         {
-            flag = true;
-            temp -= 10;
+            sum += a.back() - '0';
+            a.pop_back();
         }
-        else
-            flag = false;
-        ret.insert(ret.begin(), temp);
-        ai--;
-        bi--;
-    }
-    while (ai >= 0)
-    {
-        char temp = a[ai];
-        if (flag)
-            temp += 1;
-        if (temp > '9')
+        if (b.size())
         {
-            flag = true;
-            temp -= 10;
+            sum += b.back() - '0';
+            b.pop_back();
         }
-        else
-            flag = false;
-        ret.insert(ret.begin(), temp);
-        ai--;
+        ret += (sum % 10) + '0';
+        sum /= 10;
     }
-    while (bi >= 0)
-    {
-        char temp = b[bi];
-        if (flag)
-            temp += 1;
-        if (temp > '9')
-        {
-            flag = true;
-            temp -= 10;
-        }
-        else
-            flag = false;
-        ret.insert(ret.begin(), temp);
-        bi--;
-    }
-    if (flag)
-        ret.insert(ret.begin(), '1');
+    reverse(ret.begin(), ret.end());
+    
+    return ret;
 }
 int main() {
     ios_base::sync_with_stdio(false);
@@ -77,8 +47,8 @@ int main() {
     cout.tie(NULL);
     
     cin >> a >> b;
-    go(a, b);
-    cout << ret << '\n';
+    
+    cout << add(a,b) << '\n';
 
     return 0;
 }
