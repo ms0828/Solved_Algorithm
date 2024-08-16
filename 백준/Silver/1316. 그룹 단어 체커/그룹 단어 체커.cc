@@ -31,26 +31,21 @@ int main() {
     for (int i = 0; i < n; i++)
     {
         string w = s[i];
-        bool isG = true;
-        char prev = w[0];
-        a[i][w[0] - 'a'] = 1;
-        for (int j = 1; j < w.size(); j++)
+        bool flag = true;
+        for (int j = 0; j < w.size(); j++)
         {
-            if (w[j] != prev)
+            if (a[i][w[j] - 'a'])
             {
-                if (a[i][w[j] - 'a'])
-                {
-                    isG = false;
-                    break;
-                }
-                prev = w[j];
+                flag = false;
+                break;
             }
             a[i][w[j] - 'a'] = 1;
+            while (w[j] == w[j + 1])
+                j++;
         }
-        if (isG)
+        if (flag)
             cnt++;
     }
     cout << cnt << '\n';
-   
     return 0;
 }
