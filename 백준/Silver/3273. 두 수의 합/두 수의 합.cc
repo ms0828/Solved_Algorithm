@@ -33,7 +33,7 @@ int main() {
     {
         if (v[l] + v[r] == x)
         {
-            l++;
+            r--;
             ret++;
         }
         else if (v[l] + v[r] > x)
