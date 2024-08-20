@@ -34,21 +34,19 @@ int main() {
     sort(p.begin(), p.end());
 
     int day = 1;
-    int j = 0;
-    for (int i = 0; i < p.size(); i++)
+    for (int i = 0; i < p.size();)
     {
-        while (j < p.size() && p[j].first <= day)
+        while (i < p.size() && p[i].first <= day)
         {
-            pq.push(p[j].second);
-            ret += p[j].second;
+            pq.push(p[i].second);
+            ret += p[i].second;
             if (pq.size() > day)
             {
                 ret -= pq.top();
                 pq.pop();
             }
-            j++;
+            i++;
         }
-        i = j - 1;
         day++;
     }
     cout << ret << '\n';
