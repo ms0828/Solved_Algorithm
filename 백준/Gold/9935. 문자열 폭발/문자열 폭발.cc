@@ -14,7 +14,8 @@
 #include<cmath>
 #pragma warning(disable:4996)
 using namespace std;
-string s, b, ret;
+string s, b, ret, temp;
+stack<char> st;
 int main() {
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
@@ -25,16 +26,38 @@ int main() {
 
     for (int i = 0; i < s.size(); i++)
     {
-        ret += s[i];
+        st.push(s[i]);
 
-        if (ret.size() >= b.size() && ret.substr(ret.size() - b.size(), ret.size()) == b)
+        if (st.size() >= b.size() && st.top() == b[b.size() - 1])
         {
-            ret.erase(ret.size() - b.size(), ret.size());
+            temp = "";
+            for (char c : b)
+            {
+                temp += st.top();
+                st.pop();
+            }
+            reverse(temp.begin(), temp.end());
+            if (temp != b)
+            {
+                for (char c : temp)
+                {
+                    st.push(c);
+                }
+            }
         }
     }
-    if (ret.size() == 0)
+
+    if(st.empty())
         cout << "FRULA\n";
     else
+    {
+        while (!st.empty())
+        {
+            ret += st.top();
+            st.pop();
+        }
+        reverse(ret.begin(), ret.end());
         cout << ret << '\n';
+    }
     return 0;
 }
