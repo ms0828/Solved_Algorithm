@@ -26,20 +26,11 @@ int go(vector<int> t1, vector<int> t2)
     {
         for (int j = i + 1; j < t1.size(); j++)
         {
-            int p1 = t1[i];
-            int p2 = t1[j];
-            sum1 = sum1 + s[p1][p2] + s[p2][p1];
+            sum1 = sum1 + s[t1[i]][t1[j]] + s[t1[j]][t1[i]];
+            sum2 = sum2 + s[t2[i]][t2[j]] + s[t2[j]][t2[i]];
         }
     }
-    for (int i = 0; i < t2.size(); i++)
-    {
-        for (int j = i + 1; j < t2.size(); j++)
-        {
-            int p1 = t2[i];
-            int p2 = t2[j];
-            sum2 = sum2 + s[p1][p2] + s[p2][p1];
-        }
-    }
+
     return abs(sum1 - sum2);
 }
 
